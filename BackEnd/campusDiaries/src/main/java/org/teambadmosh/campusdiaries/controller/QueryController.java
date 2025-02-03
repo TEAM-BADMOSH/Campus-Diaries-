@@ -36,4 +36,9 @@ public class QueryController {
     public List<Query> getAllQueries(){
         return queryServices.getAllQueries();
     }
+
+    @GetMapping("/getAllQueriesofUser/{userId}")
+    public List<Query> getAllQueriesByUserId(@PathVariable String userId){
+        return queryServices.getQueriesByUserId(userId);
+    }
 }

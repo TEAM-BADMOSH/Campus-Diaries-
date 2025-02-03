@@ -46,4 +46,9 @@ public class QueryService {
     public List<Query> getAllQueries(){
         return queryRepository.findAll();
     }
+
+    //All the for one user
+    public List<Query> getAllQueriesByUserId(String userId){
+        return queryRepository.findQueriesByUserId(userId);
+    }
 }
