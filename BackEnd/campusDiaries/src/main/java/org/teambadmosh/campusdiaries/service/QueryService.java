@@ -33,16 +33,16 @@ public class QueryService {
     }
     //update a query
     public void updateQuery(Query newQuery, String id){
-        Query query = getQueryById(id);
-        if(query != null){
-            query.setQueryContent(newQuery.getQueryContent());
-            queryRepository.save(query);
+        Query oldQuery = getQueryById(id);
+        if(oldQuery != null){
+            oldQuery.setQueryContent(newQuery.getQueryContent());
+            queryRepository.save(oldQuery);
         }
         else{
             System.out.println("Query not found");
         }
     }
-    //get all data
+    //get all data-
     public List<Query> getAllQueries(){
         return queryRepository.findAll();
     }
