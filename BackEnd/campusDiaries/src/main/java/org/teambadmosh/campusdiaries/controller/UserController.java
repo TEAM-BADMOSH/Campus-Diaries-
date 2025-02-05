@@ -19,15 +19,7 @@ public class UserController {
     public List<User> getAllUser() {
         return userService.getAllUsers();
     }
-    @PostMapping("/createUser")
-    public User createUser(@RequestBody User user) {
-        return userService.createUser(user);
-    }
 
-    @DeleteMapping("/deleteUser/{userId}")
-    public void deleteUser(@PathVariable String userId) {
-        userService.deleteUserById(userId);
-    }
 
     @PutMapping("/updateUser/{username}")
     public void updateUser(@PathVariable String username) {

@@ -12,9 +12,7 @@ public class UserService {
     @Autowired
     UserRepository userRepository;
 
-    public User createUser(User user) {
-        return userRepository.save(user);
-    }
+
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
@@ -25,9 +23,7 @@ public class UserService {
     public User getUserByUsername(String username) {
         return userRepository.findByUsername(username).orElse(null);
     }
-    public void deleteUserById(String id) {
-        userRepository.deleteById(id);
-    }
+
     public void updateUser(String username) {
         User oldUser = getUserByUsername(username);
         if(oldUser != null) {
