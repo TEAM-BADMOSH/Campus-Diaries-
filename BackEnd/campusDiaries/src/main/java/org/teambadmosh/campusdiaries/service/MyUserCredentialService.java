@@ -15,6 +15,7 @@ import org.teambadmosh.campusdiaries.repository.UserCredentialRepo;
 import org.teambadmosh.campusdiaries.repository.UserRepository;
 
 import java.util.Collections;
+import java.util.Map;
 
 @Service
 public class MyUserCredentialService implements UserDetailsService {
@@ -36,9 +37,9 @@ public class MyUserCredentialService implements UserDetailsService {
         return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), Collections.emptyList());
     }
 
-    public ResponseEntity<String> registerUser(@RequestBody UserCredential userCredential) {
+    public ResponseEntity<?> registerUser(@RequestBody UserCredential userCredential) {
         if (userCredentialRepo.findByUsername(userCredential.getUsername()) != null) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Username already taken!");
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of("message","Username already taken!"));
         }
         userCredential.setPassword(passwordEncoder.encode(userCredential.getPassword())); // Hash password
         userCredentialRepo.save(userCredential);
@@ -49,6 +50,6 @@ public class MyUserCredentialService implements UserDetailsService {
         user.setId(userCredential.getId());
         userRepository.save(user);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body("User registered successfully!");
+        return ResponseEntity.status(HttpStatus.CREATED).body(Map.of("message","User registered successfully!"));
     }
 }
