@@ -3,10 +3,7 @@ package org.teambadmosh.campusdiaries.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import org.bson.types.ObjectId;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
@@ -17,9 +14,6 @@ public class User {
     @Id
     private String id;
 
-    @NonNull
-    @Indexed(unique = true)
     private String username;
-    @NonNull
     private String name;
 }
