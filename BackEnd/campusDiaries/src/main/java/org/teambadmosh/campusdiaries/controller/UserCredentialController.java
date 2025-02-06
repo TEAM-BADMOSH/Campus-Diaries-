@@ -12,8 +12,11 @@ import org.teambadmosh.campusdiaries.repository.UserRepository;
 import org.teambadmosh.campusdiaries.service.MyUserCredentialService;
 import org.teambadmosh.campusdiaries.service.UserService;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("/")
+@CrossOrigin(origins = "http://localhost:5173/")
 public class UserCredentialController {
 
     @Autowired
@@ -22,7 +25,7 @@ public class UserCredentialController {
 
     // Register user
     @PostMapping("/register")
-    public ResponseEntity<String> registerUser(@RequestBody UserCredential userCredential) {
+    public ResponseEntity<?> registerUser(@RequestBody UserCredential userCredential) {
         return myUserCredentialService.registerUser(userCredential);
     }
     // Get current logged-in user's username
