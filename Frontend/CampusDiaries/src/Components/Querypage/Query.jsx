@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Search, Settings, User } from "lucide-react";
+import QueryCard from "../QueryCard/QueryCard";
 
 
 
@@ -14,12 +15,7 @@ const TopBar = () => (
   </div>
 );
 
-const QueryCard = ({ title, content }) => (
-  <div className="p-4 bg-white rounded shadow-md">
-    <h3 className="text-lg font-semibold">{title}</h3>
-    <p className="text-gray-500">{content}</p>
-  </div>
-);
+
 
 export default function Querypage() {
   const [data, setData] = useState([
@@ -80,7 +76,7 @@ return (
       <TopBar />
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-8">
         {data.length > 0 ? (
-          data.map((item, i) => <QueryCard key={i} title={item.username} content={item.query} />)
+          data.map((item, i) => <QueryCard key={i} username={item.username} content={item.query} />)
         ) : (
           <p className="text-center col-span-full">Loading...</p>
         )}
