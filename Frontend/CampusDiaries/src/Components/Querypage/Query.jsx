@@ -1,18 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Search, Settings, User } from "lucide-react";
 
-const Sidebar = () => (
-  <div className="w-64 bg-gray-900 text-white p-4 flex flex-col gap-4">
-    <h2 className="text-xl font-bold">Dashboard</h2>
-    <nav className="flex flex-col gap-2">
-      {["Home", "Profile", "Settings"].map((item) => (
-        <a key={item} href="#" className="p-2 rounded hover:bg-gray-700">
-          {item}
-        </a>
-      ))}
-    </nav>
-  </div>
-);
+
 
 const TopBar = () => (
   <div className="flex flex-col items-center bg-white p-4 rounded-lg shadow-md">
@@ -84,19 +73,19 @@ export default function Querypage() {
 //       .catch((error) => console.error("Error fetching data:", error));
 //   }, []);
 
-  return (
-    <div className="flex h-screen">
-      <Sidebar />
-      <div className="flex-1 flex flex-col p-6 space-y-6 bg-gray-100">
-        <TopBar />
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-8">
-          {data.length > 0 ? (
-            data.map((item, i) => <QueryCard key={i} title={item.username} content={item.query} />)
-          ) : (
-            <p className="text-center col-span-full">Loading...</p>
-          )}
-        </div>
+return (
+  <div className="flex h-screen">
+    {/* Add left margin equal to sidebar width */}
+    <div className="flex-1 flex flex-col p-6 space-y-6 bg-gray-100 "> {/* Added ml-64 */}
+      <TopBar />
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-8">
+        {data.length > 0 ? (
+          data.map((item, i) => <QueryCard key={i} title={item.username} content={item.query} />)
+        ) : (
+          <p className="text-center col-span-full">Loading...</p>
+        )}
       </div>
     </div>
-  );
+  </div>
+);
 }

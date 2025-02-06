@@ -85,7 +85,7 @@ export default function CustomLogin() {
 
         <p className="text-center text-gray-600 mt-4 text-sm">
           Don't have an account?{" "}
-          <a href="/" className="text-blue-500 font-semibold hover:underline">
+          <a href="/signup" className="text-blue-500 font-semibold hover:underline">
             Sign Up
           </a>
         </p>

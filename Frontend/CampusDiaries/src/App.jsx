@@ -1,32 +1,26 @@
-<<<<<<< HEAD
-import { useState } from 'react';
-import SignUp from './Components/SignUpPage/SignUp';
-import Login from './Components/LoginPage/Login';
-import Querypage from './Components/QueryPage/Query';
 
-
-function App() {
-  return (
-    <div>
-    <Querypage/>
-      {/* <SignUp/> 
-      <Login/>
-      */}
-
-    </div>
-=======
-import { useState } from "react";
 import "./App.css";
-import SignUp from "./Components/SignUpPage/SignUp";
-import Login from "./Components/LoginPage/Login";
-import { Outlet } from "react-router-dom";
+import SignUp from "./Components/SignUpPage/SignUp.jsx";
+import Login from "./Components/LoginPage/Login.jsx";
+import { Navigate , Routes , Route } from "react-router-dom";
+import Query from "./Components/Querypage/Query.jsx"
+import Home from "./Home.jsx";
+import DashBoard from "./Components/DashBoard/DashBoard.jsx";
 
 function App() {
   return (
     <>
-      <Outlet />
+        <Routes>
+          <Route path="/" element={<Navigate to="/login" />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/home" element={<Home />}>
+              <Route path="query" element={<Query />} />
+              <Route path="dashboard" element = {<DashBoard/>}/>
+              <Route index element={<Query />} /> {/* Default child route */}
+          </Route>
+        </Routes>
     </>
->>>>>>> a5c70d7845d268ae03814892e82d43c335d4f797
   );
 }
 
