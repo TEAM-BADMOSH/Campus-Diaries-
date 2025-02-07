@@ -41,7 +41,7 @@ public class SecurityConfig {
 //                .formLogin(login -> login
 //
 //                        .defaultSuccessUrl("/user", true)) // Redirect after login
-                .httpBasic(Customizer.withDefaults())
+//                .httpBasic(Customizer.withDefaults())
 //                .logout(logout -> logout.logoutUrl("/logout").logoutSuccessUrl("http://localhost:5173/login")) // Logout handler
                 .formLogin(form -> form
                         .loginPage("http://localhost:5173/login") // Your custom login page URL

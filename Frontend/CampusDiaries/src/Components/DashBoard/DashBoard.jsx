@@ -2,15 +2,17 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import QueryCard from "../QueryCard/QueryCard";
 import { useAuth } from "../AuthContex/AuthContex";
+import ReplySection from "../ReplyPage/ReplySection";
 
 function DashBoard() {
   const [userQueries, setUserQueries] = useState([]);
+  const [selectedQueryId, setSelectedQueryId] = useState(null);
   const { user } = useAuth();
   useEffect(() => {
     fetch(`http://localhost:8000/query/getQueriesByUsername/${user.username}`, {
       method: "GET",
       headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
+        "Content-Type": "application/json",
       },
       credentials: "include",
     })
@@ -18,6 +20,29 @@ function DashBoard() {
       .then((data) => setUserQueries(data))
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
+  const handleDeleteQuery = (queryId) => {
+    fetch(`http://localhost:8000/query/deleteQuery/${queryId}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Failed to delete query");
+        }
+        return response.json();
+      })
+      .then(() => {
+        // Remove the deleted query from the state
+        setUserQueries((prevQueries) =>
+          prevQueries.filter((query) => query.queryId !== queryId)
+        );
+      })
+      .catch((error) => console.error("Error deleting query:", error));
+  };
+  
   return (
     <div className="flex h-screen">
       <div className="flex-1 flex flex-col p-6 space-y-6 bg-gray-100">
@@ -38,6 +63,9 @@ function DashBoard() {
                 content={query.queryContent}
                 date={query.queryTime}
                 showDeleteButton={true}
+                onDelete={() => handleDeleteQuery(query.queryId)}
+                onClick={() => {
+                  setSelectedQueryId(query.queryId)}}
               />
             ))
           ) : (
@@ -49,6 +77,12 @@ function DashBoard() {
           )}
         </div>
       </div>
+       {/* Reply Section */}
+       {selectedQueryId && (
+        <div className="w-1/3 p-4 bg-white border-l">
+          <ReplySection queryId={selectedQueryId} />
+        </div>
+      )}
     </div>
   );
 }

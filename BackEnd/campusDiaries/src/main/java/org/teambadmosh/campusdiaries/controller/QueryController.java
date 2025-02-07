@@ -28,9 +28,9 @@ public class QueryController {
         return queryServices.getQueriesByUsernname(username);
     }
     //to delete query by username
-    @DeleteMapping("/deleteQuery/{username}")
-    public void deleteQueryById(@PathVariable String username){
-        queryServices.deleteQueryById(username);
+    @DeleteMapping("/deleteQuery/{queryId}")
+    public void deleteQueryById(@PathVariable String queryId){
+        queryServices.deleteQueryById(queryId);
     }
     //to update query by username
     @PutMapping("/updateQuery/{username}")
