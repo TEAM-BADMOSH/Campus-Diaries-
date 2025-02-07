@@ -17,25 +17,25 @@ public class QueryController {
     public Query createQuery(@RequestBody Query query){
         return queryServices.createQuery(query);
     }
-    //to get query by queryid
-    @GetMapping("/getQuery/{id}")
-    public Query getQueryById(@PathVariable String id){
-        return queryServices.getQueryById(id);
+    //to get query by username
+    @GetMapping("/getQuery/{username}")
+    public Query getQueryByUsername(@PathVariable String username){
+        return queryServices.getQueryById(username);
     }
-    //to get all queries of a particular user by userId
-    @GetMapping("/getQueriesByUserId/{userId}")
-    public List<Query> getQueriesByUserId(@PathVariable String userId){
-        return queryServices.getQueriesByUserId(userId);
+    //to get all queries of a particular user by username
+    @GetMapping("/getQueriesByUsername/{username}")
+    public List<Query> getQueriesByUserId(@PathVariable String username){
+        return queryServices.getQueriesByUsernname(username);
     }
-    //to delete query by queryid
-    @DeleteMapping("/deleteQuery/{id}")
-    public void deleteQueryById(@PathVariable String id){
-        queryServices.deleteQueryById(id);
+    //to delete query by username
+    @DeleteMapping("/deleteQuery/{username}")
+    public void deleteQueryById(@PathVariable String username){
+        queryServices.deleteQueryById(username);
     }
-    //to update query by queryid
-    @PutMapping("/updateQuery/{id}")
-    public void updateQuery(@RequestBody Query newQuery, @PathVariable String id){
-        queryServices.updateQuery(newQuery, id);
+    //to update query by username
+    @PutMapping("/updateQuery/{username}")
+    public void updateQuery(@RequestBody Query newQuery, @PathVariable String username){
+        queryServices.updateQuery(newQuery, username);
     }
     //to get all queries(just for testing database)
     @GetMapping("/getAllQueries")

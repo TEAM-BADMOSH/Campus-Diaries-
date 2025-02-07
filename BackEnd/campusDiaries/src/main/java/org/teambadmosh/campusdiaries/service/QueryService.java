@@ -24,8 +24,8 @@ public class QueryService {
         return queryRepository.findById(id).orElse(null);
     }
     //get all queries of a user
-    public List<Query> getQueriesByUserId(String userId){
-        return queryRepository.findQueriesByUserId(userId);
+    public List<Query> getQueriesByUsernname(String username){
+        return queryRepository.findQueriesByUsername(username);
     }
     //delete a query
     public void deleteQueryById(String id){

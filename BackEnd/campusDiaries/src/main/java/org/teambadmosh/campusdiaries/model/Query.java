@@ -18,8 +18,7 @@ public class Query {
 
    @Id
    private String queryId;
-   private String userId;
-   @NonNull
+   private String username;
    private String queryContent;
    private LocalDateTime queryTime = LocalDateTime.now();
    private int upvote=0;

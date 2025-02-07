@@ -1,26 +1,30 @@
-
-import "./App.css";
-import SignUp from "./Components/SignUpPage/SignUp.jsx";
-import Login from "./Components/LoginPage/Login.jsx";
-import { Navigate , Routes , Route } from "react-router-dom";
-import Query from "./Components/Querypage/Query.jsx"
-import Home from "./Home.jsx";
-import DashBoard from "./Components/DashBoard/DashBoard.jsx";
+import { Routes, Route, Navigate } from "react-router-dom";
+import Login from "./Components/LoginPage/Login";
+import SignUp from "./Components/SignUpPage/SignUp";
+import Home from "./Home";
+import Query from "./Components/Querypage/Query";
+import DashBoard from "./Components/DashBoard/DashBoard";
+import ProtectedRoute from "./Components/ProtectedRoute/ProtectedRoute";
+import { AuthProvider } from "./Components/AuthContex/AuthContex";
 
 function App() {
   return (
-    <>
-        <Routes>
-          <Route path="/" element={<Navigate to="/login" />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<SignUp />} />
-            <Route path="/home" element={<Home />}>
-              <Route path="query" element={<Query />} />
-              <Route path="dashboard" element = {<DashBoard/>}/>
-              <Route index element={<Query />} /> {/* Default child route */}
+    <AuthProvider>
+      <Routes>
+        <Route path="/" element={<Navigate to="/login" />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<SignUp />} />
+
+        {/* Protect all routes under /home */}
+        <Route element={<ProtectedRoute />}>
+          <Route path="/home" element={<Home />}>
+            <Route path="query" element={<Query />} />
+            <Route path="dashboard" element={<DashBoard />} />
+            <Route index element={<Query />} /> {/* Default child route */}
           </Route>
-        </Routes>
-    </>
+        </Route>
+      </Routes>
+    </AuthProvider>
   );
 }
 

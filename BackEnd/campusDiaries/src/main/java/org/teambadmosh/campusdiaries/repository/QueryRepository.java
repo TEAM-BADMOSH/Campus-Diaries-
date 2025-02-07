@@ -9,5 +9,5 @@ import org.teambadmosh.campusdiaries.model.Query;
 import java.util.List;
 @Repository
 public interface QueryRepository extends MongoRepository<Query,String> {
-    public List<Query> findQueriesByUserId(String userId);
+    List<Query> findQueriesByUsername(String username);
 }

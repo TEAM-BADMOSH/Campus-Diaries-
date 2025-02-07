@@ -23,22 +23,25 @@ public class SecurityConfig {
         http
                 .cors(cors -> cors.configurationSource(request -> {
                     CorsConfiguration config = new CorsConfiguration();
-                    config.setAllowedOrigins(List.of("http://localhost:5173")); // Allow frontend
+                    config.setAllowedOrigins(List.of("http://localhost:5173"));// Allow frontend
                     config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
                     config.setAllowedHeaders(List.of("*"));
                     config.setAllowCredentials(true); // ✅ Allow credentials (cookies)
+
                     return config;
                 }))
 
                 .csrf(AbstractHttpConfigurer::disable) // Disable CSRF (optional)
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/login", "/register").permitAll()
+                        .requestMatchers("/query/**").permitAll()
+                        .requestMatchers("/users/userDetails").authenticated()
                         .anyRequest().authenticated()
                 )
 //                .formLogin(login -> login
 //
 //                        .defaultSuccessUrl("/user", true)) // Redirect after login
-//                .httpBasic(Customizer.withDefaults())
+                .httpBasic(Customizer.withDefaults())
 //                .logout(logout -> logout.logoutUrl("/logout").logoutSuccessUrl("http://localhost:5173/login")) // Logout handler
                 .formLogin(form -> form
                         .loginPage("http://localhost:5173/login") // Your custom login page URL

@@ -1,12 +1,13 @@
 // React Component: CustomLogin.js
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../AuthContex/AuthContex";
 
 export default function CustomLogin() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-
+  const { fetchUserDetails } = useAuth();
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -24,7 +25,10 @@ export default function CustomLogin() {
       });
 
       if (response.ok) {
-        alert(`Welcome ${username}`); // Redirect to protected route
+        setTimeout(async () => {
+          await fetchUserDetails(); // Call function to fetch user details after login
+          navigate("/home"); // Redirect to protected route
+        }, 500);
       } else {
         alert("Login failed!");
       }
@@ -85,7 +89,10 @@ export default function CustomLogin() {
 
         <p className="text-center text-gray-600 mt-4 text-sm">
           Don't have an account?{" "}
-          <a href="/signup" className="text-blue-500 font-semibold hover:underline">
+          <a
+            href="/signup"
+            className="text-blue-500 font-semibold hover:underline"
+          >
             Sign Up
           </a>
         </p>

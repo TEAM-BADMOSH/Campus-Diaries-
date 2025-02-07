@@ -1,9 +1,8 @@
 package org.teambadmosh.campusdiaries.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.service.annotation.PutExchange;
 import org.teambadmosh.campusdiaries.model.User;
 import org.teambadmosh.campusdiaries.service.UserService;
 
@@ -24,5 +23,10 @@ public class UserController {
     @PutMapping("/updateUser/{username}")
     public void updateUser(@PathVariable String username) {
          userService.updateUser(username);
+    }
+
+    @GetMapping("/userDetails")
+    public ResponseEntity<?> getUserDetails() {
+        return userService.getAuthenticatedUser();
     }
 }
