@@ -37,6 +37,7 @@ function DashBoard() {
                 username={query.username}
                 content={query.queryContent}
                 date={query.queryTime}
+                showDeleteButton={true}
               />
             ))
           ) : (

@@ -29,6 +29,8 @@ export default function Querypage() {
                 key={i}
                 username={item.username}
                 content={item.queryContent}
+                date={item.queryTime}
+                showDeleteButton={false}
               />
             ))
           ) : (
