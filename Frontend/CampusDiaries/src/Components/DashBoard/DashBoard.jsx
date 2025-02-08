@@ -8,18 +8,6 @@ function DashBoard() {
   const [userQueries, setUserQueries] = useState([]);
   const [selectedQueryId, setSelectedQueryId] = useState(null);
   const { user } = useAuth();
-  useEffect(() => {
-    fetch(`http://localhost:8000/query/getQueriesByUsername/${user.username}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      credentials: "include",
-    })
-      .then((response) => response.json())
-      .then((data) => setUserQueries(data))
-      .catch((error) => console.error("Error fetching data:", error));
-  }, []);
   const handleDeleteQuery = (queryId) => {
     fetch(`http://localhost:8000/query/deleteQuery/${queryId}`, {
       method: "DELETE",
@@ -35,13 +23,31 @@ function DashBoard() {
         return response.json();
       })
       .then(() => {
-        // Remove the deleted query from the state
-        setUserQueries((prevQueries) =>
-          prevQueries.filter((query) => query.queryId !== queryId)
+        // Remove deleted query from state
+        setUserQueries(
+          (prevQueries) =>
+            prevQueries.filter((query) => query.queryId !== queryId) // Ensure IDs match
         );
+
+        // If the deleted query is selected, clear the reply section
+        if (selectedQueryId === queryId) {
+          setSelectedQueryId(null);
+        }
       })
       .catch((error) => console.error("Error deleting query:", error));
   };
+  useEffect(() => {
+    fetch(`http://localhost:8000/query/getQueriesByUsername/${user.username}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    })
+      .then((response) => response.json())
+      .then((data) => setUserQueries(data))
+      .catch((error) => console.error("Error fetching data:", error));
+  }, [handleDeleteQuery]);
 
   return (
     <div className="flex h-screen">
