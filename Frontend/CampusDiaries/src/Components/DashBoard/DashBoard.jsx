@@ -42,7 +42,7 @@ function DashBoard() {
       })
       .catch((error) => console.error("Error deleting query:", error));
   };
-  
+
   return (
     <div className="flex h-screen">
       <div className="flex-1 flex flex-col p-6 space-y-6 bg-gray-100">
@@ -65,7 +65,8 @@ function DashBoard() {
                 showDeleteButton={true}
                 onDelete={() => handleDeleteQuery(query.queryId)}
                 onClick={() => {
-                  setSelectedQueryId(query.queryId)}}
+                  setSelectedQueryId(query.queryId);
+                }}
               />
             ))
           ) : (
@@ -77,8 +78,7 @@ function DashBoard() {
           )}
         </div>
       </div>
-       {/* Reply Section */}
-       {selectedQueryId && (
+      {selectedQueryId && (
         <div className="w-1/3 p-4 bg-white border-l">
           <ReplySection queryId={selectedQueryId} />
         </div>

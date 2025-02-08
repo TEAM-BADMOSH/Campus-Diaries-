@@ -39,7 +39,7 @@ export default function CustomLogin() {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gradient-to-r from-blue-500 to-purple-600 p-4">
+    <div className="flex items-center justify-center min-h-screen bg-gray-800 p-4">
       <div className="bg-white p-8 rounded-2xl shadow-2xl w-full max-w-md">
         <h2 className="text-3xl font-extrabold text-center mb-6 text-gray-800">
           Login
@@ -81,7 +81,7 @@ export default function CustomLogin() {
           {/* Submit Button */}
           <button
             type="submit"
-            className="w-full bg-gradient-to-r from-blue-500 to-purple-500 text-white py-3 rounded-lg font-bold text-lg hover:bg-gradient-to-r hover:from-blue-600 hover:to-purple-600"
+            className="w-full bg-gradient-to-r bg-gray-800 text-white py-3 rounded-lg font-bold text-lg hover:bg-gray-700"
           >
             Login
           </button>

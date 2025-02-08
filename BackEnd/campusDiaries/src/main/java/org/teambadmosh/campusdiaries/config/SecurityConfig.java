@@ -1,5 +1,6 @@
 package org.teambadmosh.campusdiaries.config;
 
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -38,11 +39,7 @@ public class SecurityConfig {
                         .requestMatchers("/users/userDetails").authenticated()
                         .anyRequest().authenticated()
                 )
-//                .formLogin(login -> login
-//
-//                        .defaultSuccessUrl("/user", true)) // Redirect after login
 //                .httpBasic(Customizer.withDefaults())
-//                .logout(logout -> logout.logoutUrl("/logout").logoutSuccessUrl("http://localhost:5173/login")) // Logout handler
                 .formLogin(form -> form
                         .loginPage("http://localhost:5173/login") // Your custom login page URL
                         .loginProcessingUrl("/login") // Spring Security's default login processing URL
@@ -52,6 +49,10 @@ public class SecurityConfig {
                 .logout(logout -> logout
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("http://localhost:5173/login")
+                        .logoutSuccessHandler((request, response, authentication) -> {
+                            response.setStatus(HttpServletResponse.SC_OK);
+                        })
+                        .permitAll()
                         .invalidateHttpSession(true)
                         .deleteCookies("JSESSIONID")
                 )

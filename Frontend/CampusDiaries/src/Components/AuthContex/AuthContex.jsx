@@ -11,7 +11,7 @@ export const AuthProvider = ({ children }) => {
     try {
       const response = await fetch("http://localhost:8000/users/userDetails", {
         method: "GET",
-        credentials: "include", // ✅ Ensures session cookies are sent
+        credentials: "include", //  Ensures session cookies are sent
       });
 
       if (!response.ok) {
@@ -19,8 +19,7 @@ export const AuthProvider = ({ children }) => {
       }
 
       const data = await response.json();
-      // console.log("User Details:", data);
-      setUser(data); // ✅ Save user data in state
+      setUser(data);
     } catch (error) {
       console.error("Error fetching user details:", error);
       setUser(null);
@@ -29,7 +28,6 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  // ✅ Call fetchUserDetails when component mounts
   useEffect(() => {
     fetchUserDetails();
   }, []);

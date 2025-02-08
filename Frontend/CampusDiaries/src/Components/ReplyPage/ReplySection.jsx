@@ -2,17 +2,16 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useAuth } from "../AuthContex/AuthContex";
 
-const ReplySection = ({queryId}) => {
+const ReplySection = ({ queryId }) => {
   const navigate = useNavigate(); // For navigation
   const { user } = useAuth(); // Get logged-in user
   const [replies, setReplies] = useState([]);
   const [newReply, setNewReply] = useState("");
 
-    
   // Fetch replies when component mounts
   useEffect(() => {
-    if (!queryId) return; // ✅ Prevents fetching if queryId is undefined
-  
+    if (!queryId) return; // Prevents fetching if queryId is undefined
+
     fetch(`http://localhost:8000/reply/getRepliesByQueryId/${queryId}`, {
       method: "GET",
       credentials: "include",
@@ -20,20 +19,20 @@ const ReplySection = ({queryId}) => {
       .then((response) => response.json())
       .then((data) => setReplies(data))
       .catch((error) => console.error("Error fetching replies:", error));
-  }, [queryId]); // ✅ Runs only when queryId changes
-  
-console.log(replies , queryId);
+  }, [queryId]); //  Runs only when queryId changes
+
+  console.log(replies, queryId);
 
   // Function to submit a reply
   const handleReplySubmit = async () => {
     if (!newReply.trim()) return;
-  
+
     const replyData = {
-      queryId,  // ✅ Make sure this is passed correctly
-      username: user.username, // ✅ Use logged-in user
+      queryId, //  Make sure this is passed correctly
+      username: user.username, // Use logged-in user
       replyContent: newReply,
     };
-  
+
     try {
       const response = await fetch("http://localhost:8000/reply/addReply", {
         method: "POST",
@@ -43,22 +42,25 @@ console.log(replies , queryId);
         credentials: "include",
         body: JSON.stringify(replyData),
       });
-  
+
       if (!response.ok) {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
-  
-      // ✅ Check if response has content before calling .json()
-      const data = response.headers.get("content-length") > 0 ? await response.json() : null;
-  
+
+      //  Check if response has content before calling .json()
+      const data =
+        response.headers.get("content-length") > 0
+          ? await response.json()
+          : null;
+
       if (data) {
         console.log("Reply added:", data);
-        setReplies([...replies, data]); // ✅ Update the UI with the new reply
+        setReplies([...replies, data]); //  Update the UI with the new reply
       } else {
         console.log("Reply submitted successfully but no data returned.");
       }
-  
-      setNewReply(""); // ✅ Clear the input field after submission
+
+      setNewReply(""); //  Clear the input field after submission
     } catch (error) {
       console.error("Error submitting reply:", error);
     }
@@ -83,7 +85,9 @@ console.log(replies , queryId);
             <div key={index} className="p-4 bg-white rounded shadow-md">
               <h3 className="font-semibold text-lg">{reply.username}</h3>
               <p className="text-gray-500">{reply.replyContent}</p>
-              <p className="text-gray-400 text-sm">{new Date(reply.replyTime).toLocaleString()}</p>
+              <p className="text-gray-400 text-sm">
+                {new Date(reply.replyTime).toLocaleString()}
+              </p>
             </div>
           ))
         ) : (

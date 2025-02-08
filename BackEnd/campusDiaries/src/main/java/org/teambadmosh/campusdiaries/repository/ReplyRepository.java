@@ -9,4 +9,5 @@ import java.util.Optional;
 @Repository
 public interface ReplyRepository extends MongoRepository<Reply,String> {
     public List<Reply> findRepliesByQueryId(String queryId);
+    public void deleteRepliesByQueryId(String queryId);
 }

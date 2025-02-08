@@ -2,10 +2,12 @@ package org.teambadmosh.campusdiaries.service;
 
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authorization.method.AuthorizeReturnObject;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.teambadmosh.campusdiaries.model.Query;
 import org.teambadmosh.campusdiaries.repository.QueryRepository;
+import org.teambadmosh.campusdiaries.repository.ReplyRepository;
 
 import java.util.List;
 
@@ -14,6 +16,9 @@ import java.util.List;
 public class QueryService {
     @Autowired
     private QueryRepository queryRepository;
+
+    @Autowired
+    private ReplyRepository replyRepository;
 
     //add query
     public Query createQuery(Query query){
@@ -29,6 +34,7 @@ public class QueryService {
     }
     //delete a query
     public void deleteQueryById(String id){
+        replyRepository.deleteRepliesByQueryId(id);
         queryRepository.deleteById(id);
     }
     //update a query
