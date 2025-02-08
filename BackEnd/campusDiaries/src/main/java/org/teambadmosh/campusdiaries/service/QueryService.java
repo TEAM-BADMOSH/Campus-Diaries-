@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.teambadmosh.campusdiaries.model.Query;
 import org.teambadmosh.campusdiaries.repository.QueryRepository;
 import org.teambadmosh.campusdiaries.repository.ReplyRepository;
+import org.teambadmosh.campusdiaries.repository.SearchRepository;
 
 import java.util.List;
 
@@ -19,6 +20,9 @@ public class QueryService {
 
     @Autowired
     private ReplyRepository replyRepository;
+
+    @Autowired
+    private SearchRepository searchRepository;
 
     //add query
     public Query createQuery(Query query){
@@ -51,5 +55,9 @@ public class QueryService {
     //get all data-
     public List<Query> getAllQueries(){
         return queryRepository.findAll();
+    }
+
+    public List<Query> findByText(String text) {
+        return searchRepository.findByTextSearch(text);
     }
 }

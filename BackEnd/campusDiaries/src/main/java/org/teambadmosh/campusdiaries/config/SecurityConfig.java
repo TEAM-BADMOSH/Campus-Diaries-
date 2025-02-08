@@ -27,7 +27,7 @@ public class SecurityConfig {
                     config.setAllowedOrigins(List.of("http://localhost:5173"));// Allow frontend
                     config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
                     config.setAllowedHeaders(List.of("*"));
-                    config.setAllowCredentials(true); // ✅ Allow credentials (cookies)
+                    config.setAllowCredentials(true); // Allow credentials (cookies)
 
                     return config;
                 }))

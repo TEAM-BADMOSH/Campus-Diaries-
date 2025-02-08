@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { useAuth } from "../AuthContex/AuthContex";
 
-const TopBar = ({ onQueryAdded }) => {
+const TopBar = ({ onQueryAdded, onSearchResults }) => {
   const [queryContent, setQueryContent] = useState("");
   const { user } = useAuth();
+  const [searchQuery, setSearchQuery] = useState("");
 
   const handleAddQuery = async () => {
     if (!queryContent.trim()) {
@@ -43,20 +44,70 @@ const TopBar = ({ onQueryAdded }) => {
     }
   };
 
+  const handleSearch = async () => {
+    if (!queryContent.trim()) {
+      alert("Please enter text to search!");
+      return;
+    }
+
+    try {
+      const response = await fetch(
+        `http://localhost:8000/query/${queryContent}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to fetch search results");
+      }
+
+      const data = await response.json();
+      setSearchQuery(data);
+    } catch (error) {
+      console.error("Search error:", error);
+      alert("Error fetching search results.");
+    }
+  };
+  console.log(searchQuery);
+
   return (
     <div className="flex flex-col items-center bg-white p-4 rounded-lg shadow-md">
-      <div className="flex items-center space-x-2">
+      {/* Search Input */}
+      <div className="flex items-center space-x-2 mb-4">
         <input
           type="text"
-          placeholder="Enter your query..."
+          placeholder="Search queries..."
           className="w-80 border p-2 rounded"
           value={queryContent}
           onChange={(e) => setQueryContent(e.target.value)}
         />
-        <button className="bg-gray-800 text-white p-2 rounded">Search</button>
-        <button onClick={handleAddQuery} className="border p-2 rounded text-gray-900">
-          Add
+        <button
+          onClick={handleSearch}
+          className="bg-gray-800 text-white p-2 rounded"
+        >
+          Search
         </button>
+      </div>
+
+      {/* Search Results */}
+      <div className="w-full max-w-2xl">
+        {searchQuery.length > 0 ? (
+          <ul className="bg-gray-100 p-4 rounded-lg shadow-md">
+            {searchQuery.map((query) => (
+              <li key={query.id} className="border-b py-2">
+                <p className="font-semibold">{query.queryContent}</p>
+                <p className="text-sm text-gray-500">by {query.username}</p>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="text-gray-500 text-sm mt-2">No search results found.</p>
+        )}
       </div>
     </div>
   );

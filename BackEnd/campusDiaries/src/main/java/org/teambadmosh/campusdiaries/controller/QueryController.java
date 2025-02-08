@@ -1,6 +1,7 @@
 package org.teambadmosh.campusdiaries.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.teambadmosh.campusdiaries.model.Query;
 import org.teambadmosh.campusdiaries.service.QueryService;
@@ -41,5 +42,11 @@ public class QueryController {
     @GetMapping("/getAllQueries")
     public List<Query> getAllQueries(){
         return queryServices.getAllQueries();
+    }
+
+    @GetMapping("/{text}")
+    public ResponseEntity<?> searchQuery(@PathVariable String text){
+        List<Query> result = queryServices.findByText(text);
+        return ResponseEntity.ok(result);
     }
 }
